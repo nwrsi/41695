@@ -1,19 +1,20 @@
-#define BLYNK_TEMPLATE_ID "TMPL6jfWTUTZZ"
-#define BLYNK_TEMPLATE_NAME "Quickstart Template"
+#define BLYNK_TEMPLATE_ID "TMPL6jfWTUTZZ" 
+#define BLYNK_TEMPLATE_NAME "Quickstart Template" 
+#define BLYNK_AUTH_TOKEN "tkFyHR-b6JOOCC8SsxIuCwZ7BX5N2bkJ"
 
 #define BLYNK_PRINT Serial
 
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
-#include "secrets.h"
-
+char ssid[] = "secret"; 
+char pass[] = "secret";
 BlynkTimer timer;
 
 #define WATER_PIN D0
 
 void sendWaterSensor()
 {
-  int water = analogRead(WATER_PIN);
+  int water = analogRead(D0);
 
   Serial.print("Water Sensor = ");
   Serial.println(water);
@@ -30,16 +31,15 @@ void sendWaterSensor()
   {
     Serial.println("NOT connected to Blynk!");
   }
-
-  if (water == 1023)
-  {
-    digitalWrite(D4, HIGH);
-    digitalWrite(D5, LOW);
+  if(water == 1023){
+    digitalWrite(D4,HIGH);
+    digitalWrite(D5,LOW);
+    delay(200);
   }
-  else
-  {
-    digitalWrite(D4, LOW);
-    digitalWrite(D5, HIGH);
+  else{
+    digitalWrite(D4,LOW);
+    digitalWrite(D5,HIGH);
+    delay(200);
   }
 }
 
@@ -52,11 +52,12 @@ void setup()
   Serial.println("ESP8266 START");
 
   pinMode(WATER_PIN, INPUT);
-  pinMode(D4, OUTPUT);
-  pinMode(D5, OUTPUT);
+  pinMode(D4,OUTPUT);
+  pinMode(D5,OUTPUT);
 
   Serial.println("Connecting to WiFi...");
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  WiFi.begin(ssid, pass);
 
   while (WiFi.status() != WL_CONNECTED)
   {
